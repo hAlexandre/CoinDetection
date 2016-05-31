@@ -399,7 +399,7 @@ public class MontarPainelInicial  {
 			} 
 		}
 		if(aux==0)
-			caminhoArquivo = "C:\\Users\\Alexandre A\\Pictures\\Capturar.png";
+			caminhoArquivo = "C:\\Users\\Alexandre A\\Pictures\\Capturar.bmp";
 		
 		return ( caminhoArquivo );
 	}
