@@ -27,7 +27,7 @@ public class ControlarImagem {
 	//*******************************************************************************************
 	// METODO PARA GERAR A IMAGEM RASTER EM NIVEIS DE CINZA A PARTIR DA IMAGEM BUFERIZADA COLORIDA
 
-	private void criarImagemCinza ( BufferedImage imagem ) 
+	public void criarImagemCinza ( BufferedImage imagem ) 
 	{
 		int    x, y, r, g, b;
 		Raster imagemRasterEntrada;
@@ -153,7 +153,7 @@ public class ControlarImagem {
 	}
 
 	//*******************************************************************************************
-	private BufferedImage transformarMatriz2Buffer ( char[][] imagemM,
+	public BufferedImage transformarMatriz2Buffer ( char[][] imagemM,
 			                                         int      nLin,
 			                                         int      nCol
 			                                       )

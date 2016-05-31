@@ -113,7 +113,7 @@ public class MontarPainelInicial  {
 		addAButton ( "New Image", "botaoImagem", buttonPanel, true, controlePrograma );
 		btReset = addAButton ( "Reset", "botaoReset", buttonPanel, false, controlePrograma );
 		btAcao1 = addAButton ( "Zoom bicubico", "zoom", buttonPanel, false, controlePrograma );
-		btAcao3 = addAButton ( "Acao3", "botaoAcao3", buttonPanel, false, controlePrograma );
+		btAcao3 = addAButton ( "Canny", "botaoAcao3", buttonPanel, false, controlePrograma );
 		btAcao4 = addAButton ( "Acao4", "botaoAcao4", buttonPanel, false, controlePrograma );
 		btSalva = addAButton ( "Save", "botaoSalva", buttonPanel, false, controlePrograma );
 		addAButton ( "END", "botaoFim", buttonPanel, true, controlePrograma );
@@ -399,7 +399,7 @@ public class MontarPainelInicial  {
 			} 
 		}
 		if(aux==0)
-			caminhoArquivo = "C:\\Users\\Alexandre A\\Pictures\\Capturar.bmp";
+			caminhoArquivo = "capturar.bmp";
 		
 		return ( caminhoArquivo );
 	}

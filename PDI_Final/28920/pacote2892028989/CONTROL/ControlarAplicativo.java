@@ -2,8 +2,12 @@ package pacote2892028989.CONTROL;
 
 	import java.awt.*;
 	import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImagingOpException;
+import java.awt.image.WritableRaster;
 import java.util.ResourceBundle.Control;
+
+import javax.imageio.ImageIO;
 
 import pacote2892028989.VIEW.*;
 
@@ -20,6 +24,7 @@ public class ControlarAplicativo implements ActionListener {
 	private int                 nLinImageAtual, nColImageAtual;
 	private int                 nLinImageInic, nColImageInic;
 	private boolean             estadoDesenho;
+	private EdgeDetector canny;
 
 	//*******************************************************************************************
 	public ControlarAplicativo( )
@@ -27,6 +32,7 @@ public class ControlarAplicativo implements ActionListener {
 		pnCenario = new MontarPainelInicial( this );
 		pnCenario.showPanel();
 		estadoDesenho  = false;
+		
 	}
  
 	//*******************************************************************************************
@@ -139,8 +145,51 @@ public class ControlarAplicativo implements ActionListener {
 	//*******************************************************************************************
 	private void controlarAcao3()
 	{
+		canny = new EdgeDetector();
+		
+		char[][] imgChar = controleImagem.getImagemCinza();
+		
+		BufferedImage image = controleImagem.transformarMatriz2Buffer(imgChar, imgChar[0].length, imgChar[1].length);
+		
+		canny.setSourceImage(image);
+		try {
+			canny.process();
+			
+			Image img = canny.getEdgeImage();
+			
+			BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
+		    // Draw the image on to the buffered image
+		    Graphics2D bGr = bimage.createGraphics();
+		    bGr.drawImage(img, 0, 0, null);
+		    bGr.dispose();
+			
+			
+			controleImagem.criarImagemCinza(bimage);
+			
+			imagemCinza    = controleImagem.getImagemCinza();
+			nLinImageInic  = controleImagem.getNLin();
+			nColImageInic  = controleImagem.getNCol();
+
+			pnCenario.mudarBotoes();
+			pnCenario.limpaPainelDir( desenhoDir );
+			controleImagem.mostrarImagemMatriz ( imagemCinza, nLinImageInic, nColImageInic, desenhoDir );
+
+			nLinImageAtual = nLinImageInic;
+			nColImageAtual = nColImageInic;
+			imagemAtual    = controleImagem.copiarImagem ( imagemCinza, nLinImageInic, nColImageInic );
+			
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	//*******************************************************************************************
+	
+	public static Image getImageFromArray(int[] pixels, int width, int height) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        WritableRaster raster = (WritableRaster) image.getData();
+        raster.setPixels(0,0,width,height,pixels);
+        return image;
+    }
 }
