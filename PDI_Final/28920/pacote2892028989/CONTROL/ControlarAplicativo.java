@@ -21,8 +21,8 @@ public class ControlarAplicativo implements ActionListener {
 	private char[][]            imagemCinza;
 	private char[][]            imagemAtual;
 
-	private int                 nLinImageAtual, nColImageAtual;
-	private int                 nLinImageInic, nColImageInic;
+	public int                 nLinImageAtual, nColImageAtual;
+	public int                 nLinImageInic, nColImageInic;
 	private boolean             estadoDesenho;
 	private EdgeDetector canny;
 
@@ -149,7 +149,7 @@ public class ControlarAplicativo implements ActionListener {
 		
 		char[][] imgChar = controleImagem.getImagemCinza();
 		
-		BufferedImage image = controleImagem.transformarMatriz2Buffer(imgChar, imgChar[0].length, imgChar[1].length);
+		BufferedImage image = controleImagem.transformarMatriz2Buffer(imgChar,  nLinImageAtual, nColImageAtual);
 		
 		canny.setSourceImage(image);
 		try {

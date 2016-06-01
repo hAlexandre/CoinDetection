@@ -399,7 +399,7 @@ public class MontarPainelInicial  {
 			} 
 		}
 		if(aux==0)
-			caminhoArquivo = "capturar.bmp";
+			caminhoArquivo = "cc.jpg";
 		
 		return ( caminhoArquivo );
 	}
