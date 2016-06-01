@@ -29,16 +29,16 @@ class EdgeDetector extends Component
 	private int orientation[];
 	private Image sourceImage;
 	private Image edgeImage;
-	// soglia superiore
+	// limite superior
 	private int threshold1;
-	// soglia inferiore
+	// limite inferior
 	private int threshold2;
 	private int threshold;
 	private int widGaussianKernel;
 	private float sigma;
 	int j1;
 
-	// costruttore
+	// construtor
 	public EdgeDetector() {
 		threshold1 = 10;
 		threshold2 = 1;
@@ -47,7 +47,6 @@ class EdgeDetector extends Component
 		setSigma((float) 1.0);
 	}
 
-	// processa l'immagine
 	public void process() throws Exception 
 	{
 		if (threshold < 0 || threshold > 255) 
@@ -84,7 +83,7 @@ class EdgeDetector extends Component
 		orientation = null;
 	}
 
-	// Algoritmo di Canny
+	// Algoritmo de Canny
 	// i = gaussian kernel
 	private void canny(float f, int gkernel) 
 	{
@@ -95,7 +94,7 @@ class EdgeDetector extends Component
 
 		float convy[] = new float[picsize];
 		float convx[] = new float[picsize];
-		// array delle medie gaussiane
+		// array da média gaussiana
 		float meanGauss[] = new float[gkernel];
 		float af5[] = new float[gkernel];
 		float tmp1, tmp2, tmp3, tmp4, tmp5;
@@ -106,8 +105,7 @@ class EdgeDetector extends Component
 
 		int k4 = 0;
 
-		// calcolo dei valori discreti
-		// della distribuzione gaussiana
+		// Cálculo dos valores discretos da distribuição de Gauss
 		do {
 			System.out.println("k4 = " + k4);
 			if (k4 >= gkernel)
@@ -124,7 +122,7 @@ class EdgeDetector extends Component
 			k4++;
 		} while (true);
 
-		// convoluzione lungo x e lungo y con la gaussiana
+		// convolução de X e Y com a Gaussiana
 		int j = k4;
 		j1 = width - (j - 1);
 		int l = width * (j - 1);
@@ -147,14 +145,14 @@ class EdgeDetector extends Component
 					l6++;
 					k7 -= width;
 				}
-				// convoluzione lungo x con la gaussiana
+				// convolução de x com a Gaussian
 				convy[k1] = tmp1;
-				// convoluzione lungo y con la gaussiana
+				// convolução de y com a Gaussian
 				convx[k1] = tmp2;
 			}
 		}
 
-		// convoluzione dello smoothed con la derivata
+		// convolução do smoothed com a derivada
 		float sconvy[] = new float[picsize];
 
 		for (int i5 = j - 1; i5 < j1; i5++) {
@@ -185,7 +183,7 @@ class EdgeDetector extends Component
 		}
 		convx = null;
 
-		// non-maximal suppression
+		// supressão de não máximo
 		j1 = width - j;
 		l = width * j;
 		i1 = width * (height - j);
@@ -221,7 +219,7 @@ class EdgeDetector extends Component
 				tmp10 = modulus(sconvy[j4], sconvx[j4]);
 				boolean vabene = false;
 
-				// se y*x <= 0 (ci troviamo nel secondo o quarto quadrante)
+				// Se y * x <= 0 (estamos no segundo ou quarto quadrante)
 				if (tmp1 * tmp2 <= 0) {
 					// se y >= x
 					if (Math.abs(tmp1) >= Math.abs(tmp2)) {
@@ -269,8 +267,8 @@ class EdgeDetector extends Component
 		sconvx = null;
 	}
 
-	// ritorna 0 se sono entrambi zero,
-	// altrimenti ritorna il modulo
+	// Retorna 0 se ambos são zero,
+	// Caso contrário, ele retorna o modulo
 	private float modulus(float f, float f1) {
 		if (f == 0.0F && f1 == 0.0F)
 			return 0.0F;
@@ -278,12 +276,12 @@ class EdgeDetector extends Component
 			return (float) Math.sqrt(f * f + f1 * f1);
 	}
 
-	// funzione gaussiana
+	// função gaussiana
 	private float gauss(float f, float f1) {
 		return (float) Math.exp((-f * f) / ((float) 2 * f1 * f1));
 	}
 
-	// thresholding con isteresi
+	// thresholding com histeresis
 	private void thresholding(int i, int j) {
 		if (i < j) {
 			System.out.println("Errore: soglia superiore < soglia inferiore!");
@@ -291,8 +289,7 @@ class EdgeDetector extends Component
 			for (int k = 0; k < picsize; k++)
 				data[k] = 0;
 
-			// per ogni lato con magnitude maggiore della soglia superiore
-			// traccia i lati che sono maggiori della soglia inferiore
+			// traças as linhas dentro do limite
 			for (int l = 0; l < width; l++) {
 				for (int i1 = 0; i1 < height; i1++)
 					if (magnitude[l + width * i1] >= i)
@@ -301,7 +298,7 @@ class EdgeDetector extends Component
 		}
 	}
 
-	// k è la soglia inferiore
+	// k é o limite inferior
 	private boolean linking(int i, int j, int k) {
 		j1 = i + 1;
 		int k1 = i - 1;
