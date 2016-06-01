@@ -284,7 +284,7 @@ class EdgeDetector extends Component
 	// thresholding com histeresis
 	private void thresholding(int i, int j) {
 		if (i < j) {
-			System.out.println("Errore: soglia superiore < soglia inferiore!");
+			System.out.println("Erro: limite inferior maior que o limite superior");
 		} else {
 			for (int k = 0; k < picsize; k++)
 				data[k] = 0;
