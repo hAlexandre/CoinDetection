@@ -29,16 +29,16 @@ class EdgeDetector extends Component
 	private int orientation[];
 	private Image sourceImage;
 	private Image edgeImage;
-	// limite superior
+	// soglia superiore
 	private int threshold1;
-	// limite inferior
+	// soglia inferiore
 	private int threshold2;
 	private int threshold;
 	private int widGaussianKernel;
 	private float sigma;
 	int j1;
 
-	// construtor
+	// costruttore
 	public EdgeDetector() {
 		threshold1 = 10;
 		threshold2 = 1;
@@ -47,6 +47,7 @@ class EdgeDetector extends Component
 		setSigma((float) 1.0);
 	}
 
+	// processa l'immagine
 	public void process() throws Exception 
 	{
 		if (threshold < 0 || threshold > 255) 
@@ -71,10 +72,11 @@ class EdgeDetector extends Component
 		thresholding(threshold1, threshold2);
 
 		for (int i = 0; i < picsize; i++) {
-			if (data[i] <= threshold)
-				data[i] = 0xff000000;
-			else
+			if (data[i] > threshold)
 				data[i] = -1;
+				
+			else
+				data[i] = 0xff000000;
 		}
 
 		edgeImage = pixels2image(data);
@@ -83,7 +85,7 @@ class EdgeDetector extends Component
 		orientation = null;
 	}
 
-	// Algoritmo de Canny
+	// Algoritmo di Canny
 	// i = gaussian kernel
 	private void canny(float f, int gkernel) 
 	{
@@ -94,7 +96,7 @@ class EdgeDetector extends Component
 
 		float convy[] = new float[picsize];
 		float convx[] = new float[picsize];
-		// array da média gaussiana
+		// array delle medie gaussiane
 		float meanGauss[] = new float[gkernel];
 		float af5[] = new float[gkernel];
 		float tmp1, tmp2, tmp3, tmp4, tmp5;
@@ -105,7 +107,8 @@ class EdgeDetector extends Component
 
 		int k4 = 0;
 
-		// Cálculo dos valores discretos da distribuição de Gauss
+		// calcolo dei valori discreti
+		// della distribuzione gaussiana
 		do {
 			System.out.println("k4 = " + k4);
 			if (k4 >= gkernel)
@@ -122,7 +125,7 @@ class EdgeDetector extends Component
 			k4++;
 		} while (true);
 
-		// convolução de X e Y com a Gaussiana
+		// convoluzione lungo x e lungo y con la gaussiana
 		int j = k4;
 		j1 = width - (j - 1);
 		int l = width * (j - 1);
@@ -145,14 +148,14 @@ class EdgeDetector extends Component
 					l6++;
 					k7 -= width;
 				}
-				// convolução de x com a Gaussian
+				// convoluzione lungo x con la gaussiana
 				convy[k1] = tmp1;
-				// convolução de y com a Gaussian
+				// convoluzione lungo y con la gaussiana
 				convx[k1] = tmp2;
 			}
 		}
 
-		// convolução do smoothed com a derivada
+		// convoluzione dello smoothed con la derivata
 		float sconvy[] = new float[picsize];
 
 		for (int i5 = j - 1; i5 < j1; i5++) {
@@ -183,7 +186,7 @@ class EdgeDetector extends Component
 		}
 		convx = null;
 
-		// supressão de não máximo
+		// non-maximal suppression
 		j1 = width - j;
 		l = width * j;
 		i1 = width * (height - j);
@@ -219,7 +222,7 @@ class EdgeDetector extends Component
 				tmp10 = modulus(sconvy[j4], sconvx[j4]);
 				boolean vabene = false;
 
-				// Se y * x <= 0 (estamos no segundo ou quarto quadrante)
+				// se y*x <= 0 (ci troviamo nel secondo o quarto quadrante)
 				if (tmp1 * tmp2 <= 0) {
 					// se y >= x
 					if (Math.abs(tmp1) >= Math.abs(tmp2)) {
@@ -267,8 +270,8 @@ class EdgeDetector extends Component
 		sconvx = null;
 	}
 
-	// Retorna 0 se ambos são zero,
-	// Caso contrário, ele retorna o modulo
+	// ritorna 0 se sono entrambi zero,
+	// altrimenti ritorna il modulo
 	private float modulus(float f, float f1) {
 		if (f == 0.0F && f1 == 0.0F)
 			return 0.0F;
@@ -276,20 +279,21 @@ class EdgeDetector extends Component
 			return (float) Math.sqrt(f * f + f1 * f1);
 	}
 
-	// função gaussiana
+	// funzione gaussiana
 	private float gauss(float f, float f1) {
 		return (float) Math.exp((-f * f) / ((float) 2 * f1 * f1));
 	}
 
-	// thresholding com histeresis
+	// thresholding con isteresi
 	private void thresholding(int i, int j) {
 		if (i < j) {
-			System.out.println("Erro: limite inferior maior que o limite superior");
+			System.out.println("Errore: soglia superiore < soglia inferiore!");
 		} else {
 			for (int k = 0; k < picsize; k++)
 				data[k] = 0;
 
-			// traças as linhas dentro do limite
+			// per ogni lato con magnitude maggiore della soglia superiore
+			// traccia i lati che sono maggiori della soglia inferiore
 			for (int l = 0; l < width; l++) {
 				for (int i1 = 0; i1 < height; i1++)
 					if (magnitude[l + width * i1] >= i)
@@ -298,7 +302,7 @@ class EdgeDetector extends Component
 		}
 	}
 
-	// k é o limite inferior
+	// k è la soglia inferiore
 	private boolean linking(int i, int j, int k) {
 		j1 = i + 1;
 		int k1 = i - 1;

@@ -80,6 +80,15 @@ public class ControlarAplicativo implements ActionListener {
 		if ( comando.equals( "botaoAcao3" ) && estadoDesenho ) {
 			controlarAcao3();
 		}
+		if ( comando.equals( "botaoAcao4" ) && estadoDesenho ) {
+			int k = 0;
+
+				
+//				new Hough(imagemAtual, nLinImageAtual, nColImageAtual, 10, 220, 10, desenhoDir);
+				new HoughTeste(imagemAtual, nLinImageAtual, nColImageAtual, desenhoDir);
+				
+			
+		}
 
 		if ( comando.equals( "zoom" ) )  {
 			
@@ -155,10 +164,13 @@ public class ControlarAplicativo implements ActionListener {
 		try {
 			canny.process();
 			
-			Image img = canny.getEdgeImage();
+			Image img = canny.getEdgeImage();			
 			
 			BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
+			
+			
+			
+			
 		    // Draw the image on to the buffered image
 		    Graphics2D bGr = bimage.createGraphics();
 		    bGr.drawImage(img, 0, 0, null);
@@ -173,15 +185,19 @@ public class ControlarAplicativo implements ActionListener {
 
 			pnCenario.mudarBotoes();
 			pnCenario.limpaPainelDir( desenhoDir );
+			int k = 0;
+			
+			
+				
+				
 			controleImagem.mostrarImagemMatriz ( imagemCinza, nLinImageInic, nColImageInic, desenhoDir );
-
 			nLinImageAtual = nLinImageInic;
 			nColImageAtual = nColImageInic;
 			imagemAtual    = controleImagem.copiarImagem ( imagemCinza, nLinImageInic, nColImageInic );
 			
 		} catch (Exception e1) {
 			e1.printStackTrace();
-		}
+		} 
 	}
 
 	//*******************************************************************************************
