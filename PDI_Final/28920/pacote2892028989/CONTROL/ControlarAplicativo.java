@@ -1,13 +1,8 @@
 package pacote2892028989.CONTROL;
 
-	import java.awt.*;
-	import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImagingOpException;
-import java.awt.image.WritableRaster;
-import java.util.ResourceBundle.Control;
-
-import javax.imageio.ImageIO;
 
 import pacote2892028989.VIEW.*;
 
@@ -90,10 +85,35 @@ public class ControlarAplicativo implements ActionListener {
 			
 		}
 
-		if ( comando.equals( "zoom" ) )  {
+		if ( comando.equals( "rotacao" ) )  {
 			
-			imagemCinza = transformacoes.bicubica(imagemAtual, nColImageAtual, nLinImageAtual, 2);
-			controleImagem.mostrarImagemMatriz(imagemCinza,2* nLinImageAtual, 2* nColImageAtual, desenhoDir);
+			int[][] img = new int[nLinImageAtual][nColImageAtual];
+			
+			for(int i = 0; i < imagemAtual.length; i++)
+			{
+				for(int j = 0; j < nColImageAtual; j++)
+				{
+					img[i][j] = Character.getNumericValue(imagemAtual[i][j]);
+				}
+			}
+			
+			img = Rotacao.main(nLinImageAtual, nColImageAtual, Double.parseDouble("45"), img);
+			char[][] out_img = new char[img[0].length][img[1].length];
+			
+			
+			for(int i = 0; i < img[0].length; i++)
+			{
+				for(int j = 0; j < img[1].length; j++)
+				{
+					out_img[i][j] = (char) img[i][j];
+				}
+			}
+			
+			controleImagem.mostrarImagemMatriz(out_img, out_img[0].length, out_img[1].length, desenhoDir);
+			
+			
+			//imagemCinza = transformacoes.bicubica(imagemAtual, nColImageAtual, nLinImageAtual, 2);
+			//controleImagem.mostrarImagemMatriz(imagemCinza,2* nLinImageAtual, 2* nColImageAtual, desenhoDir);
 		} 
 
 		if ( comando.equals( "botaoAcao11" ) ) {
@@ -166,10 +186,7 @@ public class ControlarAplicativo implements ActionListener {
 			
 			Image img = canny.getEdgeImage();			
 			
-			BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-			
-			
-			
+			BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);	
 			
 		    // Draw the image on to the buffered image
 		    Graphics2D bGr = bimage.createGraphics();
@@ -201,11 +218,4 @@ public class ControlarAplicativo implements ActionListener {
 	}
 
 	//*******************************************************************************************
-	
-	public static Image getImageFromArray(int[] pixels, int width, int height) {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        WritableRaster raster = (WritableRaster) image.getData();
-        raster.setPixels(0,0,width,height,pixels);
-        return image;
-    }
 }

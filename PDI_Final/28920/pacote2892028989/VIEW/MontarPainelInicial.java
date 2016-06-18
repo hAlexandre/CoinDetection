@@ -112,7 +112,7 @@ public class MontarPainelInicial  {
 		// ADDING BUTTONS
 		addAButton ( "New Image", "botaoImagem", buttonPanel, true, controlePrograma );
 		btReset = addAButton ( "Reset", "botaoReset", buttonPanel, false, controlePrograma );
-		btAcao1 = addAButton ( "Zoom bicubico", "zoom", buttonPanel, false, controlePrograma );
+		btAcao1 = addAButton ( "Rotacioanar", "rotacao", buttonPanel, false, controlePrograma );
 		btAcao3 = addAButton ( "Canny", "botaoAcao3", buttonPanel, false, controlePrograma );
 		btAcao4 = addAButton ( "Transformada de Hough", "botaoAcao4", buttonPanel, false, controlePrograma );
 		btSalva = addAButton ( "Save", "botaoSalva", buttonPanel, false, controlePrograma );

@@ -1,9 +1,9 @@
 package pacote2892028989.CONTROL;
 
-	import java.awt.*;
-	import java.awt.image.*;
-	import java.io.*;
-	import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
+import javax.imageio.ImageIO;
 
 public class ControlarImagem {
 	

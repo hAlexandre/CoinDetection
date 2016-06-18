@@ -4,11 +4,9 @@ package pacote2892028989.CONTROL;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
-import java.awt.image.WritableRaster;
 
 
 class EdgeDetector extends Component 
@@ -89,9 +87,6 @@ class EdgeDetector extends Component
 	// i = gaussian kernel
 	private void canny(float f, int gkernel) 
 	{
-		boolean flag = false;
-		boolean flag1 = false;
-
 		derivative_mag = new int[picsize];
 
 		float convy[] = new float[picsize];
@@ -101,7 +96,6 @@ class EdgeDetector extends Component
 		float af5[] = new float[gkernel];
 		float tmp1, tmp2, tmp3, tmp4, tmp5;
 		float tmp6, tmp7, tmp8, tmp9, tmp10;
-		float tmp11;
 
 		data = image2pixels(sourceImage);
 
