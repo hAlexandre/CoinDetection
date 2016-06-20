@@ -9,6 +9,7 @@ import pacote2892028989.VIEW.*;
 public class ControlarAplicativo implements ActionListener {
 
 	private ControlarTransformacoes transformacoes = new ControlarTransformacoes();
+	private Rotacao				rotacao = new Rotacao();
 	private MontarPainelInicial pnCenario;
 	private Graphics            desenhoCen, desenhoDir;
 	private ControlarImagem     controleImagem;
@@ -87,17 +88,17 @@ public class ControlarAplicativo implements ActionListener {
 
 		if ( comando.equals( "rotacao" ) )  {
 			
-			int[][] img = new int[nLinImageAtual][nColImageAtual];
+			int[][] img = new int[nColImageAtual][nLinImageAtual];
 			
-			for(int i = 0; i < imagemAtual.length; i++)
+			for(int i = 0; i < nLinImageAtual; i++)
 			{
 				for(int j = 0; j < nColImageAtual; j++)
 				{
-					img[i][j] = Character.getNumericValue(imagemAtual[i][j]);
+					img[j][i] = (int)(imagemAtual[j][i]);
 				}
 			}
 			
-			img = Rotacao.main(nLinImageAtual, nColImageAtual, Double.parseDouble("45"), img);
+			img = rotacao.main(nColImageAtual, nLinImageAtual, Double.parseDouble("20"), img);
 			char[][] out_img = new char[img[0].length][img[1].length];
 			
 			

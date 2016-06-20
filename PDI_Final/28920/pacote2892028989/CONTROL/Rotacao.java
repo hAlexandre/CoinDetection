@@ -2,7 +2,7 @@ package pacote2892028989.CONTROL;
 
 public class Rotacao {
 
-  public static int[][] main (int nrows, int ncols, double angle, int in_img[][]) {
+  public int[][] main (int nrows, int ncols, double angle, int in_img[][]) {
     int     out_img[][];
     int     i, j, x0, y0, x1, y1;
     double  ci, cj, x, y, p, q, cs, sn;
