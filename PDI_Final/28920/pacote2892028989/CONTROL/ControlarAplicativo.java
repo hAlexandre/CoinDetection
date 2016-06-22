@@ -30,13 +30,16 @@ public class ControlarAplicativo implements ActionListener {
 	public int                 nLinImageInic, nColImageInic;
 	private boolean             estadoDesenho;
 	
-	private ControladorMoeda	moedas;
+	public int compressao;
+	
+	private ControlarMoeda	moedas;
 	private EdgeDetector canny;
 	private MascaraControlador m;
 
 	//*******************************************************************************************
-	public ControlarAplicativo( )
+	public ControlarAplicativo( )	
 	{
+		compressao = 1;
 		pnCenario = new MontarPainelInicial( this );
 		pnCenario.showPanel();
 		estadoDesenho  = false;
@@ -94,9 +97,8 @@ public class ControlarAplicativo implements ActionListener {
 
 				
 			try {
-				 moedas = new ControladorMoeda(imagemAtual, nLinImageAtual, nColImageAtual, desenhoDir, controleImagem, pnCenario, m);
+				 moedas = new ControlarMoeda(imagemAtual, nLinImageAtual, nColImageAtual, desenhoDir, controleImagem, pnCenario, m);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -106,10 +108,25 @@ public class ControlarAplicativo implements ActionListener {
 			try {
 				moedas.calcularValor();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
+		}
+		
+		if ( comando.equals( "btAcao11" ) ) {					
+			compressao = 5;
+		}
+		if ( comando.equals( "btAcao12" ) ) {					
+			compressao = 4;
+		}
+		if ( comando.equals( "btAcao13" ) ) {					
+			compressao = 3;
+		}
+		if ( comando.equals( "btAcao14" ) ) {					
+			compressao = 2;
+		}
+		if ( comando.equals( "btAcao15" ) ) {					
+			compressao = 1;
 		}
 
 		if ( comando.equals( "compressao" ) )  {						
@@ -130,16 +147,14 @@ public class ControlarAplicativo implements ActionListener {
 	        }
 	        controleImagem.gravarImagem(arq , imagemAtual, nLinImageAtual, nColImageAtual );
 	        String arq2 = arq+"_comprimido.jpg";
-	        arq = arq+".jpg";
 	        
-
-	        new Jpeg(arq, arq2);
-			
-			
+	        arq = arq+".jpg";
+//	        System.out.println(arq+" "+arq2);
+	        
+	        
+	        new Jpeg(arq, arq2, 4*compressao);			
 		} 
 
-		
-		
 		if ( comando.equals( "botaoHelp" )) {
 //			ControladorCompressao comprimir = new ControladorCompressao();
 			JOptionPane.showMessageDialog(null,
@@ -152,12 +167,11 @@ public class ControlarAplicativo implements ActionListener {
 				    + "6 - Comprimir: comprime e salva a imagem alterada\n"
 				    + "7 - Salvar: salva a imagem sem realizar compressão\n"
 				    + "8 - Help: apresenta os passos para o funcionamento do programa"
-				    + "9 - End: finaliza a execução da aplicação");
-			
-			
-			
+				    + "9 - End: finaliza a execução da aplicação");		
+			System.out.println(compressao);
 		}
-
+		
+		
 
 		if ( comando.equals( "botaoSalva" ) && estadoDesenho ) {			
 			nomeArquivo = pnCenario.escolherArquivo ( 2 );

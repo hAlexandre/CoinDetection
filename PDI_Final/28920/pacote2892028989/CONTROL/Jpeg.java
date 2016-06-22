@@ -16,17 +16,17 @@ import java.util.Vector;
 public class Jpeg {
   
 	String salvar, string = "";	
-
-	int i, Quality = 80;
+	int i, quality;
 	Image image = null;
     FileOutputStream dataOut = null;
     File file, outFile;
     JpegEncoder jpg;
     
-    public Jpeg(String s, String s2){
-    	salvar = s;
-    	
-      System.out.println(s+"\n"+s2);
+    public Jpeg(String s, String s2, int quality){
+    
+    	this.salvar = s;
+    	this.quality = quality;
+
       
 //      Arquivo de saída
     
@@ -47,13 +47,11 @@ public class Jpeg {
         dataOut = new FileOutputStream(outFile);
       } catch (IOException e) {
       }
-      try {
-        Quality = Integer.parseInt("3");
-      } catch (NumberFormatException e) {
+      
         
-      }
+      
       image = Toolkit.getDefaultToolkit().getImage(salvar);
-      jpg = new JpegEncoder(image, Quality, dataOut);
+      jpg = new JpegEncoder(image, quality, dataOut);
       jpg.Compress();
       try {    	  
         dataOut.close();

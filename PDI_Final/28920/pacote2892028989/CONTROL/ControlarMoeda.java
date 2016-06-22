@@ -16,7 +16,7 @@ import pacote2892028989.MODEL.Moeda;
 import pacote2892028989.MODEL.Ponto;
 import pacote2892028989.VIEW.MontarPainelInicial;
 
-public class ControladorMoeda {
+public class ControlarMoeda {
 	
 	ArrayList<Ponto> pontos, proximos;
 	Boolean[][] visitados;
@@ -33,7 +33,7 @@ public class ControladorMoeda {
 	int k;
 	int aux = 0;
 	
-	public ControladorMoeda (char[][] imagem, int nLin, int nCol, Graphics g, ControlarImagem controleImagem, MontarPainelInicial pnCen, MascaraControlador m) throws IOException
+	public ControlarMoeda (char[][] imagem, int nLin, int nCol, Graphics g, ControlarImagem controleImagem, MontarPainelInicial pnCen, MascaraControlador m) throws IOException
 	{
 		
 

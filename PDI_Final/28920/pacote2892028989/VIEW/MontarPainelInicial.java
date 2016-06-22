@@ -158,11 +158,11 @@ public class MontarPainelInicial  {
 		outputPanelEsq.add( controlePanelAcao1 );
 		
 
-		btAcao11 = new JRadioButton ( " Acao 11 ", true );
-		btAcao12 = new JRadioButton ( " Acao 12 ", false );
-		btAcao13 = new JRadioButton ( " Acao 13 ", false );
-		btAcao14 = new JRadioButton ( " Acao 14 ", false );
-		btAcao15 = new JRadioButton ( " Acao 15 ", false );
+		btAcao11 = new JRadioButton ( " Muito alta ", false );
+		btAcao12 = new JRadioButton ( " Alta ", false );
+		btAcao13 = new JRadioButton ( " Média ", false );
+		btAcao14 = new JRadioButton ( " Baixa", false );
+		btAcao15 = new JRadioButton ( " Muito baixa", true );
 
 		btRdAcao1 = new ButtonGroup();
 		btRdAcao1.add(btAcao11 );
@@ -178,7 +178,7 @@ public class MontarPainelInicial  {
 		btAcao15.addActionListener(controlePrograma);
 
 		acao1Panel = new JPanel();
-		acao1Panel.setPreferredSize( new Dimension ( 120, 110 ) );
+		acao1Panel.setPreferredSize( new Dimension ( 140, 110 ) );
 		acao1Panel.setLayout(new GridLayout(5, 1));
 
 		acao1Panel.add( btAcao11 );
@@ -186,8 +186,8 @@ public class MontarPainelInicial  {
 		acao1Panel.add( btAcao13 );
 		acao1Panel.add( btAcao14 );
 		acao1Panel.add( btAcao15 );
-
-		acao1Panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "ACAO 1"));
+		
+		acao1Panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Taxa de Compressão"));
 
 		controlePanelAcao1.add(acao1Panel);
 		controlePanelAcao1.setVisible(false);
@@ -300,7 +300,7 @@ public class MontarPainelInicial  {
 		controlePanelVisualImagens.setVisible(false);
 
 		// VISIBLE PANEL
-//		outputPanel.add( outputPanelEsq, BorderLayout.LINE_START );
+		outputPanel.add( outputPanelEsq, BorderLayout.LINE_START );
 		outputPanel.add( outputPanelCen, BorderLayout.CENTER );
 		outputPanel.add( outputPanelDir, BorderLayout.LINE_END );
 
@@ -361,7 +361,7 @@ public class MontarPainelInicial  {
 		btAcao4.setEnabled(true);
 		btnValor.setEnabled(true);
 //		controlePanelAcao3.setVisible(true);
-//		controlePanelAcao1.setVisible(true);
+		controlePanelAcao1.setVisible(true);
 //		controlePanelAcao2.setVisible(true);
 //		controlePanelVisualImagens.setVisible(true);
 //		controlePanelAcao4.setVisible(true);
