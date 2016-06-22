@@ -4,11 +4,9 @@ package pacote2892028989.CONTROL;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
-import java.awt.image.WritableRaster;
 
 
 class EdgeDetector extends Component 
@@ -89,9 +87,6 @@ class EdgeDetector extends Component
 	// i = gaussian kernel
 	private void canny(float f, int gkernel) 
 	{
-		boolean flag = false;
-		boolean flag1 = false;
-
 		derivative_mag = new int[picsize];
 
 		float convy[] = new float[picsize];
@@ -101,7 +96,6 @@ class EdgeDetector extends Component
 		float af5[] = new float[gkernel];
 		float tmp1, tmp2, tmp3, tmp4, tmp5;
 		float tmp6, tmp7, tmp8, tmp9, tmp10;
-		float tmp11;
 
 		data = image2pixels(sourceImage);
 
@@ -110,7 +104,7 @@ class EdgeDetector extends Component
 		// calcolo dei valori discreti
 		// della distribuzione gaussiana
 		do {
-			System.out.println("k4 = " + k4);
+			
 			if (k4 >= gkernel)
 				break;
 
@@ -287,7 +281,7 @@ class EdgeDetector extends Component
 	// thresholding con isteresi
 	private void thresholding(int i, int j) {
 		if (i < j) {
-			System.out.println("Errore: soglia superiore < soglia inferiore!");
+			
 		} else {
 			for (int k = 0; k < picsize; k++)
 				data[k] = 0;
@@ -405,26 +399,26 @@ class EdgeDetector extends Component
 
 	public void setThreshold(int i) {
 		threshold = i;
-		System.out.println("Threshold: " + i);
+		
 	}
 
 	public void setHighThreshold(int i) {
 		threshold1 = i;
-		System.out.println("High Threshold: " + i);
+		
 	}
 
 	public void setLowThreshold(int i) {
 		threshold2 = i;
-		System.out.println("Low Threshold: " + i);
+		
 	}
 
 	public void setGaussKernel(int i) {
 		widGaussianKernel = i;
-		System.out.println("Gauss kernel: " + i);
+		
 	}
 
 	public void setSigma(float i) {
 		sigma = i;
-		System.out.println("sigma: " + i);
+		
 	}
 }

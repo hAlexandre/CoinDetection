@@ -19,6 +19,8 @@ public class MontarPainelInicial  {
 	private JButton  btAcao3;
 	private JButton  btAcao1;
 	private JButton  btSalva;
+	private JButton  btnValor;
+	private JButton btHelp;
 	private JButton  btReset;
 	private JButton  btAcao4;
 
@@ -48,7 +50,7 @@ public class MontarPainelInicial  {
 	private JRadioButton btAcao41; 
 	private JRadioButton btAcao42;
 	private ButtonGroup  btRdAcao4;
-
+	
 	private Graphics      desenhoCen;
 	private Graphics      desenhoDir;
 
@@ -104,25 +106,28 @@ public class MontarPainelInicial  {
 
 		// PANEL TITLE
 		JLabel titulo;
-		titulo = new JLabel( "IMAGE LAB PROCESSING");
+		titulo = new JLabel( "Alexandre Azevedo Oliveira e Gabriel de Almeida Andrade ");
 		titulo.setForeground(Color.black);
 		titulo.setFont(new Font("Dialog", Font.BOLD, 25));
 		titlePanel.add(titulo);
 
 		// ADDING BUTTONS
-		addAButton ( "New Image", "botaoImagem", buttonPanel, true, controlePrograma );
-		btReset = addAButton ( "Reset", "botaoReset", buttonPanel, false, controlePrograma );
-		btAcao1 = addAButton ( "Zoom bicubico", "zoom", buttonPanel, false, controlePrograma );
+		addAButton ( "Nova Imagem", "botaoImagem", buttonPanel, true, controlePrograma );
+		btReset = addAButton ( "Reset", "botaoReset", buttonPanel, false, controlePrograma );		
 		btAcao3 = addAButton ( "Canny", "botaoAcao3", buttonPanel, false, controlePrograma );
-		btAcao4 = addAButton ( "Transformada de Hough", "botaoAcao4", buttonPanel, false, controlePrograma );
-		btSalva = addAButton ( "Save", "botaoSalva", buttonPanel, false, controlePrograma );
+		btAcao4 = addAButton ( "Encontrar moedas", "botaoAcao4", buttonPanel, false, controlePrograma );
+		
+		btnValor = addAButton ( "Encontrar Valor", "botaoValor", buttonPanel, false, controlePrograma );
+		btAcao1 = addAButton ( "Comprimir", "compressao", buttonPanel, false, controlePrograma );
+		btSalva = addAButton ( "Salvar", "botaoSalva", buttonPanel, false, controlePrograma );
+		btHelp = addAButton ( "Help", "botaoHelp", buttonPanel, true, controlePrograma );
 		addAButton ( "END", "botaoFim", buttonPanel, true, controlePrograma );
 
 		// ADDING RADIO BUTTON PARA CONTROLE DA ACAO3
 		controlePanelAcao3 = new JPanel();
 		controlePanelAcao3.setBackground( Color.lightGray );
 		controlePanelAcao3.setMaximumSize( new Dimension ( 130, 60 ) );
-		outputPanelEsq.add( controlePanelAcao3 );
+//		outputPanelEsq.add( controlePanelAcao3 );
 
 		btAcao31 = new JRadioButton ( "Acao 31", true );
 		btAcao32 = new JRadioButton ( "Acao 32", false );
@@ -151,6 +156,7 @@ public class MontarPainelInicial  {
 		controlePanelAcao1.setBackground( Color.lightGray );
 		controlePanelAcao1.setMaximumSize( new Dimension ( 130, 115 ) );
 		outputPanelEsq.add( controlePanelAcao1 );
+		
 
 		btAcao11 = new JRadioButton ( " Acao 11 ", true );
 		btAcao12 = new JRadioButton ( " Acao 12 ", false );
@@ -293,8 +299,8 @@ public class MontarPainelInicial  {
 		controlePanelVisualImagens.add(visualImagensPanel);
 		controlePanelVisualImagens.setVisible(false);
 
-		// VISIBLE PANELS
-		outputPanel.add( outputPanelEsq, BorderLayout.LINE_START );
+		// VISIBLE PANEL
+//		outputPanel.add( outputPanelEsq, BorderLayout.LINE_START );
 		outputPanel.add( outputPanelCen, BorderLayout.CENTER );
 		outputPanel.add( outputPanelDir, BorderLayout.LINE_END );
 
@@ -353,11 +359,12 @@ public class MontarPainelInicial  {
 		btSalva.setEnabled(true);
 		btReset.setEnabled(true);
 		btAcao4.setEnabled(true);
-		controlePanelAcao3.setVisible(true);
-		controlePanelAcao1.setVisible(true);
-		controlePanelAcao2.setVisible(true);
-		controlePanelVisualImagens.setVisible(true);
-		controlePanelAcao4.setVisible(true);
+		btnValor.setEnabled(true);
+//		controlePanelAcao3.setVisible(true);
+//		controlePanelAcao1.setVisible(true);
+//		controlePanelAcao2.setVisible(true);
+//		controlePanelVisualImagens.setVisible(true);
+//		controlePanelAcao4.setVisible(true);
 	}
 
 	//*******************************************************************************************
@@ -415,7 +422,7 @@ public class MontarPainelInicial  {
 	//*******************************************************************************************
 	public void ativarPainelAcao3()
 	{
-		controlePanelAcao3.setVisible(true);
+//		controlePanelAcao3.setVisible(true);
 	}
 
 	//*******************************************************************************************
@@ -469,6 +476,7 @@ public class MontarPainelInicial  {
 	//******************************************************************************************
 	public void resetaSistema()
 	{
+		
 		btAcao11.setSelected(true);
 		btAcao21.setSelected(true);
 		btAcao31.setSelected(true);

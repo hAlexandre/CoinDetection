@@ -1,11 +1,12 @@
 package pacote2892028989.CONTROL;
 
-	import java.awt.*;
-	import java.awt.image.*;
-	import java.io.*;
-	import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
+import javax.imageio.ImageIO;
 
 public class ControlarImagem {
+	
 	
 	private	char[][]      imagemCinza;
 	private int           nLinImagem;
@@ -140,14 +141,6 @@ public class ControlarImagem {
 		imagemB = transformarMatriz2Buffer ( imagemM, nLin, nCol );
 		desenho.drawImage( imagemB, 0, 0, nCol, nLin,  null );  
 		
-//		for(int i = 0 ; i < nLin ; i++)
-//		{
-//			for(int j = 0 ; j < nCol; j++)
-//			{
-//				System.out.print((int)imagemM[j][i]+" ");
-//			}			
-//			System.out.println();
-//		}		
 		
 		
 	}
@@ -199,7 +192,35 @@ public class ControlarImagem {
 		}
 		String s = new String(nomeArquivo);
 		
-		Jpeg compressao = new Jpeg(s);
+		
+	}
+	
+	public char[][] int2char (int[][] imagem, int nLin, int nCol)
+	{
+		char[][] img = new char[nCol][nLin];
+		
+		for(int i = 0; i < nLin; i++)
+		{
+			for(int j = 0; j < nCol; j++)
+			{
+				img[j][i] = (char)(imagem[j][i]);
+			}
+		}
+		return img;
+	}
+	
+	public int[][] char2int (char[][] imagem, int nLin, int nCol)
+	{
+		int[][] img = new int[nCol][nLin];
+		
+		for(int i = 0; i < nLin; i++)
+		{
+			for(int j = 0; j < nCol; j++)
+			{
+				img[j][i] = (int)(imagem[j][i]);
+			}
+		}
+		return img;
 	}
 
 	//*******************************************************************************************

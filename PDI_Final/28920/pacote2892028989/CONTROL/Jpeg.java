@@ -23,21 +23,24 @@ public class Jpeg {
     File file, outFile;
     JpegEncoder jpg;
     
-    public Jpeg(String s){
-    	salvar = s+".jpg";
+    public Jpeg(String s, String s2){
+    	salvar = s;
     	
-      string = "C:\\Users\\Alexandre A\\Pictures\\37500erroteste.png";
+      System.out.println(s+"\n"+s2);
       
 //      Arquivo de saída
-      
-    outFile = new File(salvar+".jpg");
+    
+    outFile = new File("null");
     i = 1;    
     while (outFile.exists()) {
-      outFile = new File(salvar.substring(0, string.lastIndexOf(".")) + (i++)+".jpg" );
-      if (i > 100)
-        System.exit(0);
+    	outFile.delete();
+    	outFile = new File(string.substring(0, string.lastIndexOf(".")) + (i++) + ".jpg");    	
     }
-    file = new File("C:\\Users\\Alexandre A\\Pictures\\37500erro.png");
+    outFile.delete();
+    System.out.println(s2);
+    outFile = new File(s2);
+    
+    file = new File(salvar);
     if (file.exists()) {
     	System.out.println("HU");
       try {
@@ -45,15 +48,14 @@ public class Jpeg {
       } catch (IOException e) {
       }
       try {
-        Quality = Integer.parseInt("4");
+        Quality = Integer.parseInt("3");
       } catch (NumberFormatException e) {
         
       }
       image = Toolkit.getDefaultToolkit().getImage(salvar);
       jpg = new JpegEncoder(image, Quality, dataOut);
       jpg.Compress();
-      try {
-    	  
+      try {    	  
         dataOut.close();
       } catch (IOException e) {
       }

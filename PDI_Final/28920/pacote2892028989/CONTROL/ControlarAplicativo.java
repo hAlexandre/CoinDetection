@@ -1,20 +1,25 @@
 package pacote2892028989.CONTROL;
 
-	import java.awt.*;
-	import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImagingOpException;
-import java.awt.image.WritableRaster;
-import java.util.ResourceBundle.Control;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import pacote2892028989.MODEL.Moeda;
 import pacote2892028989.VIEW.*;
 
 public class ControlarAplicativo implements ActionListener {
-
-	private ControlarTransformacoes transformacoes = new ControlarTransformacoes();
+	
+	private Rotacao				rotacao = new Rotacao();
 	private MontarPainelInicial pnCenario;
+	
 	private Graphics            desenhoCen, desenhoDir;
 	private ControlarImagem     controleImagem;
 	private String              nomeArquivoImagemDada;
@@ -24,7 +29,10 @@ public class ControlarAplicativo implements ActionListener {
 	public int                 nLinImageAtual, nColImageAtual;
 	public int                 nLinImageInic, nColImageInic;
 	private boolean             estadoDesenho;
+	
+	private ControladorMoeda	moedas;
 	private EdgeDetector canny;
+	private MascaraControlador m;
 
 	//*******************************************************************************************
 	public ControlarAplicativo( )
@@ -32,6 +40,7 @@ public class ControlarAplicativo implements ActionListener {
 		pnCenario = new MontarPainelInicial( this );
 		pnCenario.showPanel();
 		estadoDesenho  = false;
+		m = new MascaraControlador();
 		
 	}
  
@@ -84,53 +93,73 @@ public class ControlarAplicativo implements ActionListener {
 			int k = 0;
 
 				
-//				new Hough(imagemAtual, nLinImageAtual, nColImageAtual, 10, 220, 10, desenhoDir);
-				new HoughTeste(imagemAtual, nLinImageAtual, nColImageAtual, desenhoDir);
-				
+			try {
+				 moedas = new ControladorMoeda(imagemAtual, nLinImageAtual, nColImageAtual, desenhoDir, controleImagem, pnCenario, m);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+		if ( comando.equals( "botaoValor" ) ) {
+			
+			try {
+				moedas.calcularValor();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		}
 
-		if ( comando.equals( "zoom" ) )  {
+		if ( comando.equals( "compressao" ) )  {						
+			JFileChooser fc = new JFileChooser();			
+			JOptionPane.showMessageDialog(null,"Imagem comprimida. Selecione onde deseja salvar o arquivo no formato .jpg");
 			
-			imagemCinza = transformacoes.bicubica(imagemAtual, nColImageAtual, nLinImageAtual, 2);
-			controleImagem.mostrarImagemMatriz(imagemCinza,2* nLinImageAtual, 2* nColImageAtual, desenhoDir);
+	        FileNameExtensionFilter tipos = new FileNameExtensionFilter("JPEG (.jpg)",
+	                "jpg");
+	        fc.addChoosableFileFilter(tipos);
+	        fc.setAcceptAllFileFilterUsed(false); 
+	        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+	        int returnValue = fc.showSaveDialog(null);
+	        String arq = null;
+	        if (returnValue == JFileChooser.APPROVE_OPTION)
+	        {
+	        	arq = fc.getSelectedFile().toString();	        	
+	        	        
+	        }
+	        controleImagem.gravarImagem(arq , imagemAtual, nLinImageAtual, nColImageAtual );
+	        String arq2 = arq+"_comprimido.jpg";
+	        arq = arq+".jpg";
+	        
+
+	        new Jpeg(arq, arq2);
+			
+			
 		} 
 
-		if ( comando.equals( "botaoAcao11" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao12" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao13" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao14" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao15" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao21" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao22" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao23" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao24" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao25" ) ) {
-		}
-
-		if ( comando.equals( "botaoAcao26" ) ) {
-		}
-
-		if ( comando.equals( "botaoSalva" ) && estadoDesenho ) {
+		
+		
+		if ( comando.equals( "botaoHelp" )) {
 //			ControladorCompressao comprimir = new ControladorCompressao();
+			JOptionPane.showMessageDialog(null,
+				    "Passos para o funcionamento do programa: \n"
+				    + "1 - New Image: selecionar uma imagem,\n"
+				    + "2 - Reset: desfazer as operações realizadas na imagem\n"
+				    + "3 - Canny: aplicar o filtro de canny à imagem,\n"
+				    + "4 - Encontrar moedas: após aplicado o filtro, encontra as moedas,\n"
+				    + "5 - Encontrar valor: após a detecção das moedas, identifica as moedas e apresenta o valor contido na imagem,\n"				    
+				    + "6 - Comprimir: comprime e salva a imagem alterada\n"
+				    + "7 - Salvar: salva a imagem sem realizar compressão\n"
+				    + "8 - Help: apresenta os passos para o funcionamento do programa"
+				    + "9 - End: finaliza a execução da aplicação");
+			
+			
+			
+		}
+
+
+		if ( comando.equals( "botaoSalva" ) && estadoDesenho ) {			
 			nomeArquivo = pnCenario.escolherArquivo ( 2 );
 			
 			controleImagem.gravarImagem( nomeArquivo, imagemAtual, nLinImageAtual, nColImageAtual );
@@ -141,12 +170,11 @@ public class ControlarAplicativo implements ActionListener {
 			controleImagem = new ControlarImagem( nomeArquivoImagemDada, desenhoCen );
 			nLinImageAtual   = nLinImageInic;
 			nColImageAtual   = nColImageInic;
-			imagemAtual      = controleImagem.copiarImagem ( imagemCinza, nLinImageInic, nColImageInic );
-
-			pnCenario.limpaPainelDir( desenhoDir );
+			imagemAtual      = controleImagem.copiarImagem ( imagemCinza, nLinImageInic, nColImageInic );						
 			controleImagem.mostrarImagemMatriz ( imagemAtual, nLinImageAtual, nColImageAtual, desenhoDir );
+			pnCenario.limpaPainelDir( desenhoDir );
 
-			pnCenario.ativarPainelAcao1();
+//			pnCenario.ativarPainelAcao1();
 			pnCenario.resetaSistema();
 		}
 	}
@@ -166,10 +194,7 @@ public class ControlarAplicativo implements ActionListener {
 			
 			Image img = canny.getEdgeImage();			
 			
-			BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-			
-			
-			
+			BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);	
 			
 		    // Draw the image on to the buffered image
 		    Graphics2D bGr = bimage.createGraphics();
@@ -195,17 +220,14 @@ public class ControlarAplicativo implements ActionListener {
 			nColImageAtual = nColImageInic;
 			imagemAtual    = controleImagem.copiarImagem ( imagemCinza, nLinImageInic, nColImageInic );
 			
+			
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		} 
+		
+		
+
 	}
 
 	//*******************************************************************************************
-	
-	public static Image getImageFromArray(int[] pixels, int width, int height) {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        WritableRaster raster = (WritableRaster) image.getData();
-        raster.setPixels(0,0,width,height,pixels);
-        return image;
-    }
 }
