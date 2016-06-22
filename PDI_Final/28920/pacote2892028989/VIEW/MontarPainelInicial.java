@@ -115,8 +115,7 @@ public class MontarPainelInicial  {
 		addAButton ( "Nova Imagem", "botaoImagem", buttonPanel, true, controlePrograma );
 		btReset = addAButton ( "Reset", "botaoReset", buttonPanel, false, controlePrograma );		
 		btAcao3 = addAButton ( "Canny", "botaoAcao3", buttonPanel, false, controlePrograma );
-		btAcao4 = addAButton ( "Encontrar moedas", "botaoAcao4", buttonPanel, false, controlePrograma );
-		
+		btAcao4 = addAButton ( "Encontrar moedas", "botaoAcao4", buttonPanel, false, controlePrograma );		
 		btnValor = addAButton ( "Encontrar Valor", "botaoValor", buttonPanel, false, controlePrograma );
 		btAcao1 = addAButton ( "Comprimir", "compressao", buttonPanel, false, controlePrograma );
 		btSalva = addAButton ( "Salvar", "botaoSalva", buttonPanel, false, controlePrograma );
@@ -157,7 +156,7 @@ public class MontarPainelInicial  {
 		controlePanelAcao1.setMaximumSize( new Dimension ( 130, 115 ) );
 		outputPanelEsq.add( controlePanelAcao1 );
 		
-
+		
 		btAcao11 = new JRadioButton ( " Muito alta ", false );
 		btAcao12 = new JRadioButton ( " Alta ", false );
 		btAcao13 = new JRadioButton ( " Média ", false );
@@ -170,11 +169,16 @@ public class MontarPainelInicial  {
 		btRdAcao1.add(btAcao13 );		
 		btRdAcao1.add(btAcao14 );		
 		btRdAcao1.add(btAcao15 );
-
+		
+		btAcao11.setActionCommand("btAcao11");
 		btAcao11.addActionListener(controlePrograma);
+		btAcao12.setActionCommand("btAcao12");
 		btAcao12.addActionListener(controlePrograma);
+		btAcao13.setActionCommand("btAcao13");
 		btAcao13.addActionListener(controlePrograma);
+		btAcao14.setActionCommand("btAcao14");
 		btAcao14.addActionListener(controlePrograma);
+		btAcao15.setActionCommand("btAcao15");
 		btAcao15.addActionListener(controlePrograma);
 
 		acao1Panel = new JPanel();
@@ -409,6 +413,28 @@ public class MontarPainelInicial  {
 			caminhoArquivo = "cc.jpg";
 		
 		return ( caminhoArquivo );
+	}
+	
+//	btAcao3 = addAButton ( "Canny", "botaoAcao3", buttonPanel, false, controlePrograma );
+//	btAcao4 = addAButton ( "Encontrar moedas", "botaoAcao4", buttonPanel, false, controlePrograma );		
+//	btnValor = addAButton ( "Encontrar Valor", "botaoValor", buttonPanel, false, controlePrograma );
+//	btAcao1 = addAButton ( "Comprimir", "compressao", buttonPanel, false, controlePrograma );
+	
+	public void enableCanny(Boolean b)
+	{
+		btAcao3.setEnabled(b);
+	}
+	public void enableMoedas(Boolean b)
+	{
+		btAcao4.setEnabled(b);
+	}
+	public void enableValor(Boolean b)
+	{
+		btnValor.setEnabled(b);
+	}
+	public void enableCompressao(Boolean b)
+	{
+		btAcao1.setEnabled(b);
 	}
 
 	//*******************************************************************************************

@@ -1,15 +1,14 @@
 package pacote2892028989.CONTROL;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import pacote2892028989.MODEL.Mascara;
 import pacote2892028989.MODEL.Moeda;
@@ -77,8 +76,6 @@ public class ControlarMoeda {
 		moedas = 0;
 		
 		
-		
-		
 		for(int cont = 0 ; cont < pontos.size() ; cont++)
 		{
 			Moeda aux;
@@ -94,12 +91,6 @@ public class ControlarMoeda {
 				{							
 					verifica(proximos.get(0));
 					proximos.remove(0);			
-//					int xx = pontos.get(0).getX();
-//					int yy = pontos.get(0).getY();
-//					if(!visitados[xx][yy])
-//					{
-//						
-//					}
 				}				
 				
 				for(int x = meX ; x <= maX ; x++)
@@ -158,7 +149,7 @@ public class ControlarMoeda {
 		for( int i = 0 ; i < 1 ; i++)
 		{			
 			Moeda aux = arrMoedas.get(i);						
-//			controleImagem.mostrarImagemMatriz(aux.getMoedas(), aux.getnLin(), aux.getnCol() ,g);		
+	
 		}
 		
 	}
@@ -168,7 +159,20 @@ public class ControlarMoeda {
 		
 		
 		ArrayList<Mascara> mascaras = mascaraControl.getMascaras();
-//		System.out.println(mascaras.size()+" mascaras");
+
+		
+		JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(160, 70);        
+		frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        
+        Graphics g2 = frame.getGraphics();
+      	g2.setColor(Color.blue);
+      	g2.setFont(new Font("Dialog", Font.BOLD, 16));		
+	  	g2.drawString("Por favor, aguarde", 10, 50);
+		
+
 		for(int cont = 0 ; cont < arrMoedas.size() ; cont++)
 		{			
 				Moeda moeda = arrMoedas.get(cont);			
@@ -178,7 +182,8 @@ public class ControlarMoeda {
 				char[][] matMoeda   = moeda.getMoedas();
 				
 //				criaMascara(moeda);
-				for(int ang = 0 ; ang <= 360 ; ang++)
+
+				for(int ang = 0 ; ang < 360 ; ang++)
 				{
 					int[][] aux = rotacao.main(moeda.getnCol(), moeda.getnLin(),ang, controleImagem.char2int(matMoeda, moeda.getnLin(), moeda.getnCol()));
 					for(Mascara mascara : mascaras)
@@ -207,25 +212,15 @@ public class ControlarMoeda {
 								{
 									g.setColor(Color.yellow);
 								}
-	//							g.drawLine(i, j, i, j);
 								
 								if((  (int)matMascara[i][j] == 300 ) || (i>=nColMoeda) || (j>=nColMoeda) )
 								{							
-	//								g.setColor(Color.green);
-	//								g.drawLine(i, j, i, j);
 									continue;
 								}	
 								nPixels++;
 								if(matMascara[i][j] == matMoeda2[i][j])
 								{					
-	//								g.setColor(Color.red);
-	//								g.drawLine(i, j, i, j);
 									nMatches++;					
-								}
-								else
-								{
-	//								g.setColor(Color.blue);
-	//								g.drawLine(i, j, i, j);							
 								}
 								
 							}					
@@ -236,19 +231,15 @@ public class ControlarMoeda {
 							prob = k;
 							imasc = mascara;
 							maxAng = ang;
-							moeda.setValor(mascara.getValor());		
-							
-						}	
-						
+							moeda.setValor(mascara.getValor());							
+						}							
 				}						
 			}
 			System.out.println(prob+" "+maxAng+ " "+ moeda.getValor());
 			int[][] aux = rotacao.main(moeda.getnCol(), moeda.getnLin(),maxAng, controleImagem.char2int(matMoeda, moeda.getnLin(), moeda.getnCol()));
 			matMoeda = controleImagem.int2char(aux, moeda.getnLin(), moeda.getnCol());
-//			pnCen.limpaPainelCen(g);
-//			
-//			controleImagem.mostrarImagemMatriz(matMoeda, moeda.getnLin(), moeda.getnCol(), g);
 		}
+		frame.dispose();
 		
 		double total = 0;		
 		for(Moeda moeda : arrMoedas)
@@ -257,7 +248,9 @@ public class ControlarMoeda {
 			total+=moeda.getValor();			
 		}
 		System.out.println();
+		
 		System.out.println("R$"+String.format( "%.2f", total ));
+		JOptionPane.showMessageDialog(null,"R$ "+String.format( "%.2f", total ));
 		writer.flush();
 		writer.close();
 	}
@@ -383,11 +376,5 @@ public class ControlarMoeda {
 					}										
 				}
 			}
-		
-						
-		
-		
-	}
-	
-	
+	}	
 }
